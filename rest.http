@@ -1,0 +1,9 @@
+### calling registration endpoint
+
+POST http://localhost:8000/api/v1/admin-user
+Content-Type: application/json
+
+{
+    "name":"fdljf",
+    "dkfj":"dkfj"
+}
