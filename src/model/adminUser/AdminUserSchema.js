@@ -13,8 +13,10 @@ const adminUserSchema = new mongoose.Schema(
     },
     email: {
       type: String,
+      unique: true,
+      index: 1,
       required: true,
-      maxLength: [20, "User first name can't be longer than 20 character"],
+      maxLength: [50, "users email address can't be longer than 50 character"],
     },
     phone: {
       type: String,
@@ -32,9 +34,9 @@ const adminUserSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-        },
+    },
   },
   { timestamps: true }
 );
 
-export default mongoose.model("admin-user", adminUserSchema)
+export default mongoose.model("admin-users", adminUserSchema);

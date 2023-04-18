@@ -5,9 +5,9 @@ Content-Type: application/json
 
 {   "firstName": "fhdf",
     "lastName": "fhdf",
-    "email": "fhdf",
-    "phone": "fhdf",
-    "dob": "05/14/2022",
+    "email": "abc@ab.com",
+    "phone": "fhdfsddf",
+    "dob": "03/09/2022",
     "address": "fhdf",
-    "password": "fhdf"
-  }
+    "password":"dfkjhdf"
+}
