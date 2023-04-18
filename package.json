@@ -19,6 +19,8 @@
     "helmet": "^6.1.5",
     "joi": "^17.9.1",
     "mongoose": "^7.0.3",
-    "moongoose": "^0.0.5"
+    "moongoose": "^0.0.5",
+    "nodemailer": "^6.9.1",
+    "uuid": "^9.0.0"
   }
 }

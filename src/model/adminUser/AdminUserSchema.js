@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 const adminUserSchema = new mongoose.Schema(
   {
+    status: {
+      type: String,
+      default: "inactive",
+    },
     firstName: {
       type: String,
       required: true,
@@ -34,6 +38,10 @@ const adminUserSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+    },
+    emailValidationCode: {
+      type: String,
+      default: "",
     },
   },
   { timestamps: true }
