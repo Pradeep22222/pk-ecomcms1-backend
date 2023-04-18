@@ -1,9 +1,13 @@
 import express from "express";
 import { insertAdminUser } from "../model/adminUser/AdminUserModel.js";
-import {  newAdminUserValidaton } from "../middlewares/joivalidation/adminUserValidation.js";
+import { newAdminUserValidaton } from "../middlewares/joivalidation/adminUserValidation.js";
+import { encryptPassword } from "../helpers/bcryptHelper.js";
 const router = express.Router();
 router.post("/", newAdminUserValidaton, async (req, res, next) => {
   try {
+      const { password } = req.body;
+      console.log(password);
+    req.body.password = encryptPassword(password);
     const result = await insertAdminUser(req.body);
     res.json({
       status: "success",
