@@ -2,7 +2,7 @@ import "dotenv/config";
 import express from "express";
 import helmet from "helmet";
 import cors from "cors";
-import { dbConnection } from "./src/routers/config/dbConfig.js";
+import { dbConnection } from "./src/config/dbConfig.js";
 const app = express();
 const PORT = process.env.PORT || 8000;
 dbConnection();

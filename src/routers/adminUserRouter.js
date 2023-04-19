@@ -1,8 +1,11 @@
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
 import { insertAdminUser } from "../model/adminUser/AdminUserModel.js";
-import { newAdminUserValidaton } from "../middlewares/joivalidation/adminUserValidation.js";
-import { encryptPassword } from "../helpers/bcryptHelper.js";
+import {
+  emailVerificationValidation,
+  newAdminUserValidaton,
+} from "../middlewares/joivalidation/adminUserValidation.js";
+import { comparePassword, encryptPassword } from "../helpers/bcryptHelper.js";
 import { verificationEmail } from "../helpers/emailHelper.js";
 const router = express.Router();
 router.post("/", newAdminUserValidaton, async (req, res, next) => {
@@ -37,5 +40,39 @@ router.post("/", newAdminUserValidaton, async (req, res, next) => {
     next(error);
   }
 });
+router
+router.post(
+  "/login",
+  emailVerificationValidation,
+  async (req, res, next) => {
+    try {
+      const { email, password } = req.body;
+      const user = await findOneAdminUser({ email });
+      if (user?._id) {
+        if (user.status !== "active") {
+          return res.json({
+            status: "error",
+            message:
+              "Your account has not been verified yet, please check your email and verify your account.",
+          });
+        }
+        const isMatched = comparePassword(password, user.password);
+        if (isMatched) {
+          user.password = undefined;
+          res.json({
+            status: "success",
+            message: "logged in successfully",
+          });
+        }
+      }
+      res.json({
+        status: "success",
+        message: "you can login now",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 export default router;

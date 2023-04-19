@@ -5,5 +5,5 @@ export const encryptPassword = (plainPassword) => {
   return bcrypt.hashSync(plainPassword);
 };
 export const comparePassword = (givenPassword, hashPassword) => {
-  return bcrypt.compareSync(givenPassword.hashPassword);
+  return bcrypt.compareSync(givenPassword, hashPassword);
 };

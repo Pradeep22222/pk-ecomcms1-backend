@@ -19,3 +19,18 @@ export const newAdminUserValidaton = (req, res, next) => {
     next(error);
   }
 };
+export const emailVerificationValidation = (req, res, next) => {
+  try {
+    const schema = Joi.object({
+      email: Joi.string().email({ minDomainSegments: 2 }).max(50).required(),
+      emailValidationCode: Joi.string().max(50),
+    });
+    const { error } = schema.validate(req.body);
+    if (error) {
+      (error.status = 200), next(error);
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
