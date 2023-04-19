@@ -1,12 +1,16 @@
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
-import { insertAdminUser } from "../model/adminUser/AdminUserModel.js";
+import {
+  insertAdminUser,
+  updateAdminUser,
+} from "../model/adminUser/AdminUserModel.js";
 import {
   emailVerificationValidation,
+  loginValidation,
   newAdminUserValidaton,
 } from "../middlewares/joivalidation/adminUserValidation.js";
 import { comparePassword, encryptPassword } from "../helpers/bcryptHelper.js";
-import { verificationEmail } from "../helpers/emailHelper.js";
+import { VerifiedEmail, verificationEmail } from "../helpers/emailHelper.js";
 const router = express.Router();
 router.post("/", newAdminUserValidaton, async (req, res, next) => {
   try {
@@ -40,39 +44,59 @@ router.post("/", newAdminUserValidaton, async (req, res, next) => {
     next(error);
   }
 });
-router
-router.post(
-  "/login",
+router.patch(
+  "/verify-email",
   emailVerificationValidation,
   async (req, res, next) => {
     try {
-      const { email, password } = req.body;
-      const user = await findOneAdminUser({ email });
-      if (user?._id) {
-        if (user.status !== "active") {
-          return res.json({
-            status: "error",
-            message:
-              "Your account has not been verified yet, please check your email and verify your account.",
-          });
-        }
-        const isMatched = comparePassword(password, user.password);
-        if (isMatched) {
-          user.password = undefined;
-          res.json({
+      const { emailValidationCode, email } = req.body;
+      const user = await updateAdminUser(
+        { emailValidationCode, email },
+        { emailValidationCode: "", status: "active" }
+      );
+      user.url = process.env.ROOT_DOMAIN;
+      user?._id
+        ? res.json({
             status: "success",
-            message: "logged in successfully",
+            message: "your account has been verified, you may login now",
+          }) && VerifiedEmail(user)
+        : res.json({
+            status: "error",
+            message: "Invalid or expired link, no action was taken",
           });
-        }
-      }
-      res.json({
-        status: "success",
-        message: "you can login now",
-      });
     } catch (error) {
       next(error);
     }
   }
 );
+router.post("/login", loginValidation, async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const user = await findOneAdminUser({ email });
+    if (user?._id) {
+      if (user.status !== "active") {
+        return res.json({
+          status: "error",
+          message:
+            "Your account has not been verified yet, please check your email and verify your account.",
+        });
+      }
+      const isMatched = comparePassword(password, user.password);
+      if (isMatched) {
+        user.password = undefined;
+        res.json({
+          status: "success",
+          message: "logged in successfully",
+        });
+      }
+    }
+    res.json({
+      status: "success",
+      message: "you can login now",
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default router;

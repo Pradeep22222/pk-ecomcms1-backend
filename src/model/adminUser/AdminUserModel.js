@@ -3,6 +3,9 @@ import AdminUserSchema from "./AdminUserSchema.js";
 export const insertAdminUser = (obj) => {
   return AdminUserSchema(obj).save();
 };
+export const updateAdminUser = (filter, update) => {
+  return AdminUserSchema.findOneAndUpdate(filter, update, { new: true });
+};
 export const findOneAdminUser = (filter) => {
   return AdminUserSchema.findOne(filter);
 };

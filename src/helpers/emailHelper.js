@@ -28,6 +28,20 @@ export const verificationEmail = (emailData) => {
       </br>
       <p>Please follow the <a href= "${emailData.url}">link</a> to verify your account.
       `,
-    };
-    emailProcessor(emailBody);
+  };
+  emailProcessor(emailBody);
+};
+export const VerifiedEmail = (emailData) => {
+  const emailBody = {
+    from: '"PK-ECOM 👻" <pradeepdhital001@gmail.com>', // sender address
+    to: `${emailData.email}`, // list of receivers
+    subject: "Email verification", // Subject line
+    text: `Hello ${emailData.firstName}, Your account has been verified, you may login now: ${emailData.url}`, // plain text body
+    html: `<p>Hi ${emailData.firstName}</p>
+      </br>
+      </br>
+      <p>Your account has been verified, you may <a href= "${emailData.url}">login</a> now.
+      `,
+  };
+  emailProcessor(emailBody);
 };
