@@ -23,7 +23,7 @@ export const emailVerificationValidation = (req, res, next) => {
   try {
     const schema = Joi.object({
       email: Joi.string().email({ minDomainSegments: 2 }).max(50).required(),
-      emailValidationCode: Joi.string().max(50),
+      emailValidationCode: Joi.string().max(50).required(),
     });
     const { error } = schema.validate(req.body);
     if (error) {
@@ -38,7 +38,7 @@ export const loginValidation = (req, res, next) => {
   try {
     const schema = Joi.object({
       email: Joi.string().email({ minDomainSegments: 2 }).max(50).required(),
-      password: Joi.string().max(100),
+      password: Joi.string().max(100).required(),
     });
     const { error } = schema.validate(req.body);
     if (error) {
