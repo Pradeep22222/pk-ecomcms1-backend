@@ -87,12 +87,18 @@ router.post("/login", loginValidation, async (req, res, next) => {
         res.json({
           status: "success",
           message: "logged in successfully",
+          user,
+        });
+      } else {
+        res.json({
+          status: "error",
+          message: "incorrect password, try again",
         });
       }
     }
     res.json({
-      status: "success",
-      message: "you can login now",
+      status: "error",
+      message: "there is no account registered with this email",
     });
   } catch (error) {
     next(error);
