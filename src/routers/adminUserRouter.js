@@ -12,6 +12,7 @@ import {
 } from "../middlewares/joivalidation/adminUserValidation.js";
 import { comparePassword, encryptPassword } from "../helpers/bcryptHelper.js";
 import { VerifiedEmail, verificationEmail } from "../helpers/emailHelper.js";
+import { createJWTs } from "../helpers/jwtHelper.js";
 const router = express.Router();
 router.post("/", newAdminUserValidaton, async (req, res, next) => {
   try {
@@ -85,10 +86,13 @@ router.post("/login", loginValidation, async (req, res, next) => {
       const isMatched = comparePassword(password, user.password);
       if (isMatched) {
         user.password = undefined;
+        // creating jwts
+        const JWTs = await createJWTs({ email });
         res.json({
           status: "success",
           message: "logged in successfully",
           user,
+          ...JWTs
         });
       } else {
         res.json({

@@ -11,3 +11,13 @@ Content-Type: application/json
     "address": "fhdf",
     "password":"dfkjhdf"
 }
+
+
+### logging in
+
+POST http://localhost:8000/api/v1/admin-user/login
+Content-Type: application/json
+
+{       "email":"aa@aa.com",
+"password":"aaaa"
+}

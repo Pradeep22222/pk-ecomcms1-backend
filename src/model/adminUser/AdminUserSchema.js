@@ -43,6 +43,10 @@ const adminUserSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    refreshJWT: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
