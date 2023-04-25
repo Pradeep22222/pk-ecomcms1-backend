@@ -22,7 +22,8 @@ export const newAdminUserValidaton = (req, res, next) => {
     });
     const { error } = schema.validate(req.body);
     if (error) {
-      (error.status = 200), next(error);
+      error.status = 200;
+      return next(error);
     }
     next();
   } catch (error) {
@@ -37,7 +38,8 @@ export const emailVerificationValidation = (req, res, next) => {
     });
     const { error } = schema.validate(req.body);
     if (error) {
-      (error.status = 200), next(error);
+      error.status = 200;
+      return next(error);
     }
     next();
   } catch (error) {
@@ -52,7 +54,8 @@ export const loginValidation = (req, res, next) => {
     });
     const { error } = schema.validate(req.body);
     if (error) {
-      (error.status = 200), next(error);
+      error.status = 200;
+      return next(error);
     }
     next();
   } catch (error) {

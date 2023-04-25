@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { addAccessToken } from "../model/session/sessionModel.js";
 import { updateAdminUser } from "../model/adminUser/AdminUserModel.js";
 const createAccessKey = async (payload) => {
-  const accessJWT = jwt.sign(payload, process.env.ACCESS_KEY_SECRET, {
+  const accessJWT =  jwt.sign(payload, process.env.ACCESS_KEY_SECRET, {
     expiresIn: "15m",
   });
   const obj = {
@@ -13,10 +13,10 @@ const createAccessKey = async (payload) => {
   return accessJWT;
 };
 const createRefreshKey = async (payload) => {
-  const refreshJWT = jwt.sign(payload, process.env.REFRESH_KEY_SECRET, {
+  const refreshJWT =  jwt.sign(payload, process.env.REFRESH_KEY_SECRET, {
     expiresIn: "30d",
   });
-  await updateAdminUser(payload, refreshJWT);
+  await updateAdminUser(payload, {refreshJWT});
   return refreshJWT;
 };
 export const createJWTs = async (payload) => {

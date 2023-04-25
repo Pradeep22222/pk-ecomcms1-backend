@@ -5,11 +5,13 @@ Content-Type: application/json
 
 {   "firstName": "fhdf",
     "lastName": "fhdf",
-    "email": "abhfc@dabd.com",
+    "email": "aa@aa.com",
     "phone": "fhdfsddf",
     "dob": "03/09/2022",
     "address": "fhdf",
-    "password":"dfkjhdf"
+    "password":"aaaa"
+    
+    
 }
 
 
@@ -18,6 +20,6 @@ Content-Type: application/json
 POST http://localhost:8000/api/v1/admin-user/login
 Content-Type: application/json
 
-{       "email":"aa@aa.com",
+{ "email":"aa@aa.com",
 "password":"aaaa"
 }
