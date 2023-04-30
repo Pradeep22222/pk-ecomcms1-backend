@@ -15,6 +15,8 @@ app.use(cors());
 import adminUserRouter from "./src/routers/adminUserRouter.js";
 
 app.use("/api/v1/admin-user", adminUserRouter);
+import categoriesRouter from "./src/routers/categoriesRouter.js";
+app.use("/api/v1/categories", categoriesRouter);
 
 // universal error handling
 app.use("/", (error, req, res, next) => {

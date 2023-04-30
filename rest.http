@@ -23,3 +23,20 @@ Content-Type: application/json
 { "email":"aa@aa.com",
 "password":"aaaa"
 }
+
+
+
+#------ categories apis
+
+
+### post categories
+
+POST http://localhost:8000/api/v1/categories
+
+Content-Type: application/json
+
+{ 
+    "status": "active",
+    "name":"laptops",
+    "parentId":""
+}
